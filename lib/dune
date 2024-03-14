@@ -1,4 +1,4 @@
 (library
  (name tritip)
- (modules display input lesson session stats types)
- (libraries unix))
+ (modules types display screens menu session)
+ (libraries leaves spices))

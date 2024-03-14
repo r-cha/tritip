@@ -5,22 +5,20 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github r-cha/tritip))
 
-(authors "Author Name")
+(authors "Robert Chandler")
 
-(maintainers "Maintainer Name")
+(maintainers "Robert Chandler")
 
 (license LICENSE)
 
-(documentation https://url/to/documentation)
-
 (package
  (name tritip)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (synopsis "Try typing in your terminal")
+ (description "A CLI tool to practice typing using any file.")
  (depends ocaml dune)
  (tags
-  (topics "to describe" your project)))
+  ("cli" "tui" "typing")))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
