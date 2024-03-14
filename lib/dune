@@ -1,0 +1,4 @@
+(library
+ (name tritip)
+ (modules display input lesson session stats types)
+ (libraries unix))

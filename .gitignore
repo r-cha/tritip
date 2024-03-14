@@ -1,0 +1,21 @@
+# Build artifacts
+/_build
+/*.install
+
+# OPAM switch
+/_opam
+
+# Dune configuration
+/.dune
+
+# Merlin configuration
+/.merlin
+
+# Binary files
+*.native
+*.byte
+
+# Backup files
+*~
+\#*\#
+.\#*
