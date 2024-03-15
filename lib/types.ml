@@ -5,7 +5,8 @@ type menu_model =
 
 type session_model =
   { content : string
-  ; current_position : int
+  ; position : int
+  ; last_correct : int
   }
 
 type section =
@@ -18,3 +19,4 @@ type app_model =
   }
 
 exception Invalid_transition
+exception Invalid_update

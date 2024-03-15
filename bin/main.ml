@@ -19,7 +19,7 @@ let update event model =
     if event = Event.KeyDown (Key "q")
     then raise Exit
     else (
-      let section, cmd =
+      let (section : section), cmd =
         match model.section with
         | Session_screen _ -> Session.update event model.section
         | Menu_screen _ -> Menu.update event model.section

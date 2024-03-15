@@ -25,8 +25,6 @@ let select_prev screen =
   { screen with selected }
 ;;
 
-exception Invalid_update
-
 let update event screen =
   match screen with
   | Session_screen _ -> raise Invalid_update
