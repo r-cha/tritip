@@ -11,6 +11,9 @@ bug-reports: "https://github.com/r-cha/tritip/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.12"}
+  "minttea"
+  "spices"
+  "leaves"
   "odoc" {with-doc}
 ]
 build: [
