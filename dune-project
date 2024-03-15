@@ -17,7 +17,7 @@
  (name tritip)
  (synopsis "Try typing in your terminal")
  (description "A CLI tool to practice typing using any file.")
- (depends ocaml dune)
+ (depends ocaml dune minttea spices leaves)
  (tags
   ("cli" "tui" "typing")))
 

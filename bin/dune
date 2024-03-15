@@ -1,4 +1,5 @@
 (executable
  (public_name tritip)
- (name main)
+ (name tritip)
+ (modes exe)
  (libraries tritip minttea leaves spices))
