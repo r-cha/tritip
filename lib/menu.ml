@@ -44,7 +44,7 @@ let view screen =
         let checkbox = Leaves.Forms.checkbox ~checked choice in
         if checked then highlight "%s" checkbox else checkbox)
       screen.options
-    |> String.concat "\n  "
+    |> String.concat "\n"
   in
   let help =
     subtle "j/k: select" ^ dot ^ subtle "enter: choose" ^ dot ^ subtle "esc: quit"

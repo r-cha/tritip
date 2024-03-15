@@ -5,12 +5,7 @@ open Tritip
 open Tritip.Types
 
 let init _ = Command.Noop
-
-let initial_model =
-  { quit = false
-  ; section = Menu_screen { selected = 0; options = Array.to_list (Sys.readdir ".") }
-  }
-;;
+let initial_model = { quit = false; section = Menu_screen Types.initial_menu }
 
 exception Exit
 
