@@ -16,7 +16,7 @@ exception Exit
 
 let update event model =
   try
-    if event = Event.KeyDown (Key "q")
+    if event = Event.KeyDown Escape
     then raise Exit
     else (
       let (section : section), cmd =

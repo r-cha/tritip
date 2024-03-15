@@ -14,7 +14,16 @@ let update (event : Event.t) (screen : section) =
        (match k with
         | Backspace ->
           let new_position = max 0 (model.position - 1) in
-          Session_screen { model with position = new_position }, Command.Noop
+          ( Session_screen
+              { model with
+                position = new_position
+              ; last_correct = min model.last_correct new_position
+              }
+          , Command.Noop )
+        | _ when model.position > model.last_correct ->
+          (* any key when already incorrect *)
+          Session_screen { model with position = forward }, Command.Noop
+        (* CORRECT KEYS *)
         | Space when correct_key = " " ->
           ( Session_screen { model with position = forward; last_correct = forward }
           , Command.Noop )
@@ -25,6 +34,8 @@ let update (event : Event.t) (screen : section) =
           ( Session_screen { model with position = forward; last_correct = forward }
           , Command.Noop )
         | _ ->
+          (* FIRST INCORRECT KEY *)
+          (* Move the cursor forward, but mark that they're wrong. *)
           ( Session_screen
               { model with
                 position = forward
@@ -35,16 +46,45 @@ let update (event : Event.t) (screen : section) =
 ;;
 
 let view screen =
-  let before_cursor = String.sub screen.content 0 screen.position in
+  let in_error = screen.last_correct < screen.position in
+  let completed_segment = String.sub screen.content 0 screen.last_correct in
+  let central_segment =
+    if in_error
+    then (
+      let incorrect_character =
+        error_reverse "%s" (String.sub screen.content screen.last_correct 1)
+      in
+      let difference =
+        String.sub
+          screen.content
+          (screen.last_correct + 1)
+          (screen.position - screen.last_correct - 1)
+      in
+      incorrect_character ^ difference)
+    else ""
+  in
   let style =
-    if screen.last_correct >= screen.position
-    then Spices.(default |> fg (color "#06FFB7") |> reverse true)
-    else Spices.(default |> fg (color "#FF06B7") |> reverse true)
+    if in_error
+    then Spices.(default |> fg (color "#FF06B7") |> reverse true)
+    else Spices.(default |> fg (color "#06FFB7") |> reverse true)
   in
   let cursor_content =
-    match String.sub screen.content screen.position 1 with
-    | "\n" -> "¶\n"
-    | c -> c
+    (* The cursor is usually just the cursor, but newlines need newlines and errors need backspace. *)
+    let beneath_cursor = String.sub screen.content screen.position 1 in
+    let cursor_content =
+      if in_error
+      then "⇽"
+      else (
+        match beneath_cursor with
+        | "\n" -> "⏎"
+        | c -> c)
+    in
+    let suffix =
+      match beneath_cursor with
+      | "\n" -> "\n"
+      | _ -> ""
+    in
+    cursor_content ^ suffix
   in
   let cursor = Cursor.view (Cursor.make ~style ()) ~text_style:style cursor_content in
   let after_cursor =
@@ -54,10 +94,14 @@ let view screen =
       (String.length screen.content - screen.position - 1)
   in
   Format.sprintf
-    {|  Type this: %s
-%s%s%s|}
-    (highlight "Last correct:%d Position:%d" screen.last_correct screen.position)
-    before_cursor
+    {|  %s
+%s%s%s%s|}
+    (highlight
+       "Esc to quit. Last correct:%d Position:%d"
+       screen.last_correct
+       screen.position)
+    completed_segment
+    central_segment
     cursor
     (subtle "%s" after_cursor)
 ;;

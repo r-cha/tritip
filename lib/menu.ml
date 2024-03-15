@@ -47,7 +47,7 @@ let view screen =
     |> String.concat "\n  "
   in
   let help =
-    subtle "j/k: select" ^ dot ^ subtle "enter: choose" ^ dot ^ subtle "q: quit"
+    subtle "j/k: select" ^ dot ^ subtle "enter: choose" ^ dot ^ subtle "esc: quit"
   in
   Format.sprintf {|Choose a file to practice your typing on:
 
