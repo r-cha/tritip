@@ -33,6 +33,15 @@ jobs:
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v2
+        if: github.ref != 'refs/heads/main'
         with:
-          name: built-artifacts
+          name: tritip-${{ matrix.os }}-${{ github.ref_name }}
           path: _build/default/bin/tritip.exe
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v${{ github.run_number }}
+          generate_release_notes: true
+          files: _build/default/bin/tritip.exe
