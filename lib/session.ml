@@ -78,12 +78,10 @@ let view screen =
       (* The cursor is usually just the cursor, but newlines need newlines and errors need backspace. *)
       let beneath_cursor = String.sub screen.content screen.position 1 in
       let cursor_content =
-        if in_error
-        then "⇽"
-        else (
-          match beneath_cursor with
-          | "\n" -> "⏎"
-          | c -> c)
+        match beneath_cursor with
+        | _ when in_error -> "⇽"
+        | "\n" -> "⏎"
+        | c -> c
       in
       let suffix =
         match beneath_cursor with

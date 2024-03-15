@@ -30,6 +30,6 @@ This will open an interactive menu where you can select a file to practice typin
 
 - [ ] Stats reporting (time, #typed, #wrong, wpm)
 - [ ] Long-term stats (lesson per file, aware of langauge, charts!)
-- [ ] Skip comments in code
+- [ ] Skip comments in code, skip preceding whitespace
 - [ ] Progress indicator while typing
 - [ ] Virtual keyboard display

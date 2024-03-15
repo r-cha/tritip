@@ -33,5 +33,18 @@ let view model =
     | Menu_screen screen -> Menu.view screen)
 ;;
 
-let main () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model
+let load_file_into_session file_path =
+  let content = Screens.load_content file_path in
+  { quit = false; section = Session_screen { content; position = 0; last_correct = 0 } }
+;;
+
+let main () =
+  match Sys.argv with
+  | [| _; file_path |] ->
+    Minttea.app ~init ~update ~view ()
+    |> Minttea.start ~initial_model:(load_file_into_session file_path)
+  | _ -> Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model
+;;
+
+(* let main () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model *)
 let () = main ()
